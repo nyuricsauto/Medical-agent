@@ -1,7 +1,7 @@
 import os
 import uuid
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, Query
-from fastapi.responses import Response
+from fastapi.responses import Response, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import (
@@ -64,7 +64,7 @@ async def handle_incoming_call(request: Request):
 </Response>'''
         
         logger.info(f"Returning Voice XML with WebSocket URL: {ws_url}")
-        return Response(content=voice_xml, media_type="application/xml")
+        return PlainTextResponse(content=voice_xml, media_type="application/xml")
     
     except Exception as e:
         logger.error(f"Error handling incoming call: {e}")
@@ -74,7 +74,7 @@ async def handle_incoming_call(request: Request):
     <Say>Sorry, we are experiencing technical difficulties. Please try again later.</Say>
     <Hangup />
 </Response>'''
-        return Response(content=error_xml, media_type="application/xml")
+        return PlainTextResponse(content=error_xml, media_type="application/xml")
 
 
 @app.websocket("/ws")
