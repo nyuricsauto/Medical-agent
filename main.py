@@ -68,7 +68,7 @@ async def handle_incoming_call(request: Request):
         voice_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <Response>
 <Connect>
-<Stream url="{ws_url}?call_id={call_sid}&caller_id={caller_id}" />
+<Stream url="{ws_url}" />
 </Connect>
 </Response>'''
         
@@ -89,8 +89,8 @@ async def handle_incoming_call(request: Request):
 @app.websocket("/ws")
 async def websocket_endpoint(
     websocket: WebSocket,
-    call_id: str = Query(..., description="Call session ID"),
-    caller_id: str = Query(..., description="Caller phone number")
+    call_id: str = Query(None, description="Call session ID"),
+    caller_id: str = Query(None, description="Caller phone number")
 ):
     """
     WebSocket endpoint for real-time audio streaming.
