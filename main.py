@@ -41,6 +41,10 @@ async def handle_incoming_call(request: Request):
     Return Voice XML pointing to WebSocket for audio streaming.
     """
     try:
+        # Log all incoming parameters for debugging
+        query_params = dict(request.query_params)
+        logger.info(f"Incoming request query params: {query_params}")
+        
         # Extract caller info from request
         caller_id = request.query_params.get("From", request.query_params.get("from", "Unknown"))
         call_sid = request.query_params.get("CallSid", request.query_params.get("callSid", str(uuid.uuid4())))
