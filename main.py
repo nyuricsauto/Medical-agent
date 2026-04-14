@@ -58,9 +58,9 @@ async def handle_incoming_call(request: Request):
         # Return Vobiz Voice XML
         voice_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Start>
+    <Connect>
         <Stream url="{ws_url}?call_id={call_sid}&caller_id={caller_id}" />
-    </Start>
+    </Connect>
 </Response>'''
         
         logger.info(f"Returning Voice XML with WebSocket URL: {ws_url}")
