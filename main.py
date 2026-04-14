@@ -59,7 +59,7 @@ async def handle_incoming_call(request: Request):
         voice_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Connect>
-        <Stream url="{ws_url}?call_id={call_sid}&caller_id={caller_id}" />
+        <Stream url="{ws_url}?call_id={call_sid}&caller_id={caller_id}"/>
     </Connect>
 </Response>'''
         
@@ -72,7 +72,7 @@ async def handle_incoming_call(request: Request):
         error_xml = '''<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Say>Sorry, we are experiencing technical difficulties. Please try again later.</Say>
-    <Hangup />
+    <Hangup/>
 </Response>'''
         return PlainTextResponse(content=error_xml, headers={"Content-Type": "application/xml"})
 
