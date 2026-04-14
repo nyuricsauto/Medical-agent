@@ -73,6 +73,7 @@ async def handle_incoming_call(request: Request):
 </Response>'''
         
         logger.info(f"Returning Voice XML with WebSocket URL: {ws_url}")
+        logger.info(f"Exact XML being returned (repr): {repr(voice_xml)}")
         return PlainTextResponse(content=voice_xml, headers={"Content-Type": "application/xml"})
     
     except Exception as e:
