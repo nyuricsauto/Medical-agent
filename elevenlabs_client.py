@@ -10,7 +10,7 @@ from config import (
     logger
 )
 import numpy as np
-from scipy.io import wavfile
+import wave
 
 
 # Map language codes to voice IDs (these are example IDs - replace with your actual voice IDs)
@@ -191,7 +191,11 @@ def convert_mulaw_to_wav(mu_law_data: bytes, sample_rate: int = 8000) -> bytes:
         
         # Create WAV file in memory
         wav_buffer = io.BytesIO()
-        wavfile.write(wav_buffer, sample_rate, np.frombuffer(pcm_bytes, dtype=np.int16))
+        with wave.open(wav_buffer, 'wb') as wav_file:
+            wav_file.setnchannels(1)  # Mono
+            wav_file.setsampwidth(2)  # 2 bytes per sample (16-bit)
+            wav_file.setframerate(sample_rate)
+            wav_file.writeframes(pcm_bytes)
         wav_buffer.seek(0)
         
         return wav_buffer.getvalue()
