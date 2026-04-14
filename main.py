@@ -45,9 +45,14 @@ async def handle_incoming_call(request: Request):
         query_params = dict(request.query_params)
         logger.info(f"Incoming request query params: {query_params}")
         
-        # Extract caller info from request
-        caller_id = request.query_params.get("From", request.query_params.get("from", "Unknown"))
-        call_sid = request.query_params.get("CallSid", request.query_params.get("callSid", str(uuid.uuid4())))
+        # Vobiz sends parameters in the request body as form data
+        form_data = await request.form()
+        form_params = dict(form_data)
+        logger.info(f"Incoming request body params: {form_params}")
+        
+        # Extract caller info from request body (form data) or query params
+        caller_id = form_params.get("From", form_params.get("from", query_params.get("From", query_params.get("from", "Unknown"))))
+        call_sid = form_params.get("CallSid", form_params.get("callSid", query_params.get("CallSid", query_params.get("callSid", str(uuid.uuid4())))))
         
         logger.info(f"Incoming call from {caller_id} (CallSid: {call_sid})")
         
