@@ -77,10 +77,9 @@ async def handle_incoming_call(request: Request):
     
     except Exception as e:
         logger.error(f"Error handling incoming call: {e}")
-        # Return error response in Voice XML format
+        # Return error response in Voice XML format (Vobiz doesn't support <Say>)
         error_xml = '''<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say>Sorry, we are experiencing technical difficulties. Please try again later.</Say>
     <Hangup />
 </Response>'''
         return PlainTextResponse(content=error_xml, headers={"Content-Type": "application/xml"})

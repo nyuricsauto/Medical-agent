@@ -9,3 +9,4 @@ numpy>=2.0.0
 pydantic>=2.10.0
 pyngrok==7.0.0
 sarvamai
+python-multipart
