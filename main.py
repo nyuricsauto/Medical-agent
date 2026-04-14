@@ -64,7 +64,7 @@ async def handle_incoming_call(request: Request):
 </Response>'''
         
         logger.info(f"Returning Voice XML with WebSocket URL: {ws_url}")
-        return PlainTextResponse(content=voice_xml, media_type="application/xml")
+        return PlainTextResponse(content=voice_xml, headers={"Content-Type": "application/xml"})
     
     except Exception as e:
         logger.error(f"Error handling incoming call: {e}")
@@ -74,7 +74,7 @@ async def handle_incoming_call(request: Request):
     <Say>Sorry, we are experiencing technical difficulties. Please try again later.</Say>
     <Hangup />
 </Response>'''
-        return PlainTextResponse(content=error_xml, media_type="application/xml")
+        return PlainTextResponse(content=error_xml, headers={"Content-Type": "application/xml"})
 
 
 @app.websocket("/ws")
