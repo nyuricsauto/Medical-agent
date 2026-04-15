@@ -65,12 +65,7 @@ async def handle_incoming_call(request: Request):
             ws_url = f"{scheme}://{host}/ws"
         
         # Return Vobiz Voice XML
-        voice_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-<Connect>
-<Stream url="{ws_url}" />
-</Connect>
-</Response>'''
+        voice_xml = f'''<?xml version="1.0" encoding="UTF-8"?><Response><Connect><Stream url="{ws_url}" /></Connect></Response>'''
         
         logger.info(f"Returning Voice XML with WebSocket URL: {ws_url}")
         logger.info(f"Exact XML being returned (repr): {repr(voice_xml)}")
@@ -79,10 +74,7 @@ async def handle_incoming_call(request: Request):
     except Exception as e:
         logger.error(f"Error handling incoming call: {e}")
         # Return error response in Voice XML format (Vobiz doesn't support <Say>)
-        error_xml = '''<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-<Hangup />
-</Response>'''
+        error_xml = '''<?xml version="1.0" encoding="UTF-8"?><Response><Hangup /></Response>'''
         return PlainTextResponse(content=error_xml, headers={"Content-Type": "application/xml"})
 
 
